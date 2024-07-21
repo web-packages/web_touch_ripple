@@ -1,4 +1,8 @@
-# Touch Ripple For Web
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/a7a7c667-d110-4d75-aa49-7accd26fa989">
+    <h1>Web Touch Ripple</h1>
+</div>
+
 Use web components to implement efficient and simple and flexible touch ripple effects.
 
 ## Preview

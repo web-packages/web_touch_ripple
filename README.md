@@ -1,6 +1,14 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/a7a7c667-d110-4d75-aa49-7accd26fa989">
+    <img src="https://github.com/user-attachments/assets/ec3ea870-4401-4c3b-ab79-f7c4c122a711">
     <h1>Web Touch Ripple</h1>
+    <table>
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>v1.1.0-alpha.9</th>
+          </tr>
+        </tbody>
+    </table>
 </div>
 
 Use web components to implement efficient and simple and flexible touch ripple effects.

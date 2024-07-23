@@ -16,7 +16,7 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
-    
+
     /** Sets a callback function that is called when a user taps or clicks. */
     set ontap(callback: Function) {
         this._ontap = callback;
@@ -25,7 +25,7 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Called when a user double taps of double clicks. */
     private _ondoubletap: Function;
-    
+
     /** Sets a callback function that is called when a user double taps or double clicks. */
     set ondoubletap(callback: Function) {
         this._ondoubletap = callback;

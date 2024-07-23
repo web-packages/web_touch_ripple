@@ -53,9 +53,14 @@ export class TouchRippleEffect {
         parent: HTMLElement,
         target: HTMLElement = this._ripple
     ) {
-        target.style.animation = "ripple-fadeout var(--ripple-fadeout-duration, 0.4s)";
-        target.style.animationTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
-        target.onanimationend = () => parent.removeChild(target);
+        if (target == null) return;
+        if (target == null) return;
+        target.style.transitionDuration = "var(--ripple-fadeout-duration, 0.4s)";
+        target.style.transitionTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
+        target.style.opacity = "0";
+        requestAnimationFrame(() => {
+            target.ontransitionend = () => parent.removeChild(target);
+        })
         this.dispose();
     }
 
@@ -63,9 +68,14 @@ export class TouchRippleEffect {
         parent: HTMLElement,
         target: HTMLElement = this._ripple
     ) {
-        target.style.animation = "ripple-fadeout var(--ripple-cancel-duration, 0s)";
-        target.style.animationTimingFunction = "var(--ripple-cancel-curve)";
-        target.onanimationend = () => parent.removeChild(target);
+        if (target == null) return;
+        if (target == null) return;
+        target.style.transitionDuration = "var(--ripple-cancel-duration, 0s)";
+        target.style.transitionTimingFunction = "var(--ripple-cancel-curve)";
+        target.style.opacity = "0";
+        requestAnimationFrame(() => {
+            target.ontransitionend = () => parent.removeChild(target);
+        });
         this.dispose();
     }
     
@@ -90,7 +100,7 @@ export class TouchRippleEffect {
            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
            rippleSize += blurRadiusValue * 2;
 
-        this._ripple = document.createElement("abcd");
+        this._ripple = document.createElement("div");
         const ripple = this._ripple;
         ripple.classList.add("ripple");
         ripple.style.position = "absolute";
@@ -102,13 +112,24 @@ export class TouchRippleEffect {
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
         ripple.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
-        ripple.style.animation = `ripple-fadein ${this.option.fadeInDuration}`;
-        ripple.style.animationTimingFunction = this.option.fadeInCurve;
-        ripple.style.animationFillMode = "forwards";
         ripple.style.filter = `blur(${blurRadius})`;
 
+        { // is fade-in animation ready.
+            ripple.style.opacity = "0";
+            ripple.style.transform = "scale(var(--ripple-lower-scale, 0.3))";
+            ripple.style.transformOrigin = "center";
+            ripple.style.transitionDuration = "var(--ripple-fadein-duration, 0.25s)";
+            ripple.style.transitionProperty = "opacity, transform";
+        }
+
+        queueMicrotask(() => { // is fade-in animation forward.
+            ripple.getBoundingClientRect(); // reflowed
+            ripple.style.opacity = "1";
+            ripple.style.transform = "scale(var(--ripple-upper-scale, 1))";
+        });
+
         let isFadeInEnd = false;
-        ripple.addEventListener("animationend", () => {
+        ripple.addEventListener("transitionend", () => {
             isFadeInEnd = true;
         });
 
@@ -120,7 +141,7 @@ export class TouchRippleEffect {
                     if (this.isWait == false) {
                         this.notify();
                     }
-                    ripple.onanimationend = performFadeout;
+                    ripple.ontransitionend = performFadeout;
                 }
             }
         } else {
@@ -130,7 +151,7 @@ export class TouchRippleEffect {
 
             // When don't need to hold the event call,
             // process it according to the current touch ripple status.
-            ripple.onanimationend = performFadeout;
+            ripple.ontransitionend = performFadeout;
         }
 
         return ripple;

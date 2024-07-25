@@ -1,9 +1,9 @@
 import { TouchRippleEffect, TouchRippleEffectOption, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition, PointerType } from "../type";
-import { TapGestureRecognizer } from "../gestures/components/tap";
-import { DoubleTapGestureRecognizer } from "../gestures/components/double_tap";
-import { LongTapGestureRecognizer } from "../gestures/components/long_tap";
+import { TapGestureRecognizer } from "../gestures/extensions/tap";
+import { DoubleTapGestureRecognizer } from "../gestures/extensions/double_tap";
+import { LongTapGestureRecognizer } from "../gestures/extensions/long_tap";
 import { TouchRippleGestureRecogzier } from "../gestures/gesture_recognizer";
 
 export class TouchRippleElement extends HTMLElement {
@@ -80,7 +80,9 @@ export class TouchRippleElement extends HTMLElement {
 
         if (this._ontap != null) {
             const tappableDuration = this.getDurationByName("--ripple-tappable-duration") ?? 0;
-            const hasLongTap = this._onlongtap != null;
+            const rejectableDuration = this._onlongtap != null
+                ? 0.0
+                : previewDuration;
 
             this.arena.registerBuilder(() => {
                 let effect = null;
@@ -90,8 +92,8 @@ export class TouchRippleElement extends HTMLElement {
                     (p) => effect = this.createEffect(p, this._ontap, true),
                     () => effect.status = TouchRippleEffectStatus.ACCEPTED,
                     () => effect.status = TouchRippleEffectStatus.REJECTED,
-                    hasLongTap ? 0 : previewDuration, // ms
-                    tappableDuration,                 // ms
+                    rejectableDuration, // ms
+                    tappableDuration,   // ms
                 )
             });
         }

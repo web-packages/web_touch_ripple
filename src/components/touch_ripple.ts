@@ -236,7 +236,7 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Returns a names of a touch-ripple events. */
     static get observedAttributes() {
-        return ["ontap", "ondoubletap"];
+        return ["ontap", "ondoubletap", "onlongtap"];
     }
 
     attributeChangedCallback(
@@ -247,6 +247,7 @@ export class TouchRippleElement extends HTMLElement {
         if (newVal != null) {
             if (attrName == "ontap") this.ontap = new Function(newVal);
             if (attrName == "ondoubletap") this.ondoubletap = new Function(newVal);
+            if (attrName == "onlongtap") this.onlongtap = new Function(newVal);
         }
     }
 }

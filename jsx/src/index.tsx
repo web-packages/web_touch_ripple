@@ -1,9 +1,10 @@
 import { useLayoutEffect, useRef } from "react";
 import { TouchRippleElement } from "web-touch-ripple";
 
-export function TouchRipple({onTap, onDoubleTap, wait, children}: {
+export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, children}: {
     onTap?: VoidFunction,
     onDoubleTap?: VoidFunction,
+    onLongTap?: VoidFunction,
     wait?: boolean,
     children: JSX.Element,
 }) {
@@ -13,9 +14,10 @@ export function TouchRipple({onTap, onDoubleTap, wait, children}: {
         const ripple = ref.current;
         ripple.ontap = onTap;
         ripple.ondoubletap = onDoubleTap;
+        ripple.onlongtap = onLongTap;
         
         wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
-    }, [onTap, onDoubleTap, wait]);
+    }, [onTap, onDoubleTap, onLongTap, wait]);
 
     return (
         /** @ts-ignore */

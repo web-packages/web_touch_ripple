@@ -100,6 +100,8 @@ export function TestPage() {
 | --ripple-tap-preview-duration | The rejectable duration about tap event. | 0.15s
 | --ripple-tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --ripple-double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
+| --ripple-long-tappable-duration | This duration required to define if it is a long tap. | 1s
+| --ripple-long-tappable-curve | This is curve about fade-in animation of ripples about long tap. | linear
 | --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, ignoring) | overlappable
 | --ripple-use-hover | Whether or not to apply the hover effect. | 1 (true)
 

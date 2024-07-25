@@ -110,7 +110,7 @@ export class TouchRippleElement extends HTMLElement {
         }
 
         if (this._onlongtap != null) {
-            const longtappableDuration = this.getDurationByName("--longtappable-duration") ?? 1000;
+            const longtappableDuration = this.getDurationByName("--ripple-long-tappable-duration") ?? 1000;
 
             this.arena.registerBuilder(() => {
                 let effect = null;
@@ -121,8 +121,8 @@ export class TouchRippleElement extends HTMLElement {
                         this._onlongtap,
                         true,
                         {
-                            fadeInDuration: "var(--long-tappable-duration, 1s)",
-                            fadeInCurve: "var(--long-tappable-curve, linear(0, 1))"
+                            fadeInDuration: "var(--ripple-long-tappable-duration, 1s)",
+                            fadeInCurve: "var(--ripple-long-tappable-curve, linear(0, 1))"
                         }
                     ),
                     () => effect.status = TouchRippleEffectStatus.REJECTED,

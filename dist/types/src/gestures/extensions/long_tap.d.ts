@@ -1,5 +1,5 @@
-import { GestureEventCallback, PointerPosition } from "../type";
-import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
+import { GestureEventCallback, PointerPosition } from "../../type";
+import { TouchRippleGestureRecogzier } from "../gesture_recognizer";
 export declare class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
     onLongTapStart: GestureEventCallback;
     onLongTapEnd: VoidFunction;

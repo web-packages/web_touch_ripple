@@ -1,5 +1,5 @@
-import { GestureEventCallback, PointerPosition } from "../type";
-import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
+import { GestureEventCallback, PointerPosition } from "../../type";
+import { TouchRippleGestureRecogzier } from "../gesture_recognizer";
 
 export class DoubleTapGestureRecognizer extends TouchRippleGestureRecogzier {
     /** A total number of taps or clicks by a user. */

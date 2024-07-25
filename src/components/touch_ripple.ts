@@ -1,9 +1,10 @@
 import { TouchRippleEffect, TouchRippleEffectOption, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition, PointerType } from "../type";
-import { TapGestureRecognizer } from "../gestures/tap";
-import { DoubleTapGestureRecognizer } from "../gestures/double_tap";
-import { LongTapGestureRecognizer } from "../gestures/long_tap";
+import { TapGestureRecognizer } from "../gestures/components/tap";
+import { DoubleTapGestureRecognizer } from "../gestures/components/double_tap";
+import { LongTapGestureRecognizer } from "../gestures/components/long_tap";
+import { TouchRippleGestureRecogzier } from "../gestures/gesture_recognizer";
 
 export class TouchRippleElement extends HTMLElement {
     private arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
@@ -13,6 +14,8 @@ export class TouchRippleElement extends HTMLElement {
 
     /** Is defined for update the status of added a touch effect. */
     private activeEffect?: TouchRippleEffect;
+
+    private effects: Map<TouchRippleGestureRecogzier, TouchRippleEffect> = new Map();
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
@@ -33,18 +36,16 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     /* Called when a user long press or long clicks or long pointer-down. */
-    // private _onlongtap: Function;
+    private _onlongtap: Function;
 
     /** 
      * Sets a callback function that is called when a user long press or long clicks
      * or long pointer-down.
      */
-    /*
     set onlongtap(callback: Function) {
         this._onlongtap = callback;
         this.initBuiler();
     }
-    */
 
     get child(): HTMLElement {
         return this.firstElementChild as HTMLElement;
@@ -79,17 +80,20 @@ export class TouchRippleElement extends HTMLElement {
 
         if (this._ontap != null) {
             const tappableDuration = this.getDurationByName("--ripple-tappable-duration") ?? 0;
+            const hasLongTap = this._onlongtap != null;
 
-            this.arena.registerBuilder(() =>
-                new TapGestureRecognizer(
-                    (p) => this.showEffect(p, this._ontap, false),
-                    (p) => this.showEffect(p, this._ontap, true),
-                    () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
-                    () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
-                    previewDuration,  // ms
-                    tappableDuration, // ms
+            this.arena.registerBuilder(() => {
+                let effect = null;
+
+                return new TapGestureRecognizer(
+                    (p) => effect = this.createEffect(p, this._ontap, false),
+                    (p) => effect = this.createEffect(p, this._ontap, true),
+                    () => effect.status = TouchRippleEffectStatus.ACCEPTED,
+                    () => effect.status = TouchRippleEffectStatus.REJECTED,
+                    hasLongTap ? 0 : previewDuration, // ms
+                    tappableDuration,                 // ms
                 )
-            );
+            });
         }
 
         if (this._ondoubletap != null) {
@@ -97,35 +101,35 @@ export class TouchRippleElement extends HTMLElement {
 
             this.arena.registerBuilder(() =>
                 new DoubleTapGestureRecognizer(
-                    p => this.showEffect(p, this._ondoubletap, false),
+                    p => this.createEffect(p, this._ondoubletap, false),
                     doubleTappableDuration, // ms
                 )
             );
         }
 
-        /*
         if (this._onlongtap != null) {
             const longtappableDuration = this.getDurationByName("--longtappable-duration") ?? 1000;
 
-            this.arena.registerBuilder(() =>
-                new LongTapGestureRecognizer(
-                    p => this.showEffect(
+            this.arena.registerBuilder(() => {
+                let effect = null;
+
+                return new LongTapGestureRecognizer(
+                    p => effect = this.createEffect(
                         p,
                         this._onlongtap,
                         true,
-                        { // default or user option.
+                        {
                             fadeInDuration: "var(--long-tappable-duration, 1s)",
                             fadeInCurve: "var(--long-tappable-curve, linear(0, 1))"
                         }
                     ),
-                    () => this.activeEffect.status = TouchRippleEffectStatus.REJECTED,
-                    () => this.activeEffect.status = TouchRippleEffectStatus.ACCEPTED,
+                    () => effect.status = TouchRippleEffectStatus.REJECTED,
+                    () => effect.status = TouchRippleEffectStatus.ACCEPTED,
                     previewDuration,
-                    longtappableDuration,
+                    longtappableDuration
                 )
-            );
+            });
         }
-        */
     }
 
     connectedCallback() {
@@ -198,7 +202,8 @@ export class TouchRippleElement extends HTMLElement {
         }
     }
 
-    showEffect(
+    /** Returns a new instance of ripple effect by a given properties. */
+    createEffect(
         position: PointerPosition,
         callback: Function,
         isRejectable: boolean,
@@ -206,7 +211,7 @@ export class TouchRippleElement extends HTMLElement {
             fadeInDuration: "var(--ripple-fadein-duration, 0.25s)",
             fadeInCurve: "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))"
         },
-    ) {
+    ): TouchRippleEffect {
         const overlapBehavior = this.getPropertyByName("--ripple-overlap-behavior") ?? "overlappable";
         if (overlapBehavior == "\"cancel\"") {
             this.activeEffect?.cancel(this.child);
@@ -214,15 +219,17 @@ export class TouchRippleElement extends HTMLElement {
             return;
         }
 
-        this.activeEffect = new TouchRippleEffect(
+        const effect = new TouchRippleEffect(
             position,
             callback,
             isRejectable,
             this.hasAttribute("wait"),
             option,
         );
-        
-        this.child.appendChild(this.activeEffect.createElement(this, this.child));
+
+        this.child.appendChild(effect.createElement(this, this.child));
+
+        return effect;
     }
 
     /** Returns a names of a touch-ripple events. */

@@ -53,7 +53,7 @@ export class TouchRippleEffect {
         parent: HTMLElement,
         target: HTMLElement = this._ripple
     ) {
-        if (target == null) return;
+        if (parent == null) return;
         if (target == null) return;
         target.style.transitionDuration = "var(--ripple-fadeout-duration, 0.4s)";
         target.style.transitionTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
@@ -68,7 +68,7 @@ export class TouchRippleEffect {
         parent: HTMLElement,
         target: HTMLElement = this._ripple
     ) {
-        if (target == null) return;
+        if (parent == null) return;
         if (target == null) return;
         target.style.transitionDuration = "var(--ripple-cancel-duration, 0s)";
         target.style.transitionTimingFunction = "var(--ripple-cancel-curve)";
@@ -97,8 +97,8 @@ export class TouchRippleEffect {
         }
 
         let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
-           rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
-           rippleSize += blurRadiusValue * 2;
+            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
+            rippleSize += blurRadiusValue * 2;
 
         this._ripple = document.createElement("div");
         const ripple = this._ripple;
@@ -118,8 +118,9 @@ export class TouchRippleEffect {
             ripple.style.opacity = "0";
             ripple.style.transform = "scale(var(--ripple-lower-scale, 0.3))";
             ripple.style.transformOrigin = "center";
-            ripple.style.transitionDuration = "var(--ripple-fadein-duration, 0.25s)";
             ripple.style.transitionProperty = "opacity, transform";
+            ripple.style.transitionDuration = this.option.fadeInDuration;
+            ripple.style.transitionTimingFunction = this.option.fadeInCurve;
         }
 
         queueMicrotask(() => { // is fade-in animation forward.

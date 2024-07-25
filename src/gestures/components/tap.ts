@@ -1,5 +1,5 @@
-import { GestureEventCallback, PointerPosition } from "../type";
-import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
+import { GestureEventCallback, PointerPosition } from "../../type";
+import { TouchRippleGestureRecogzier } from "../gesture_recognizer";
 
 export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
     timerIds: number[] = [];
@@ -25,7 +25,9 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
         }
 
         // about --tap-preview-duration
-        this.timerIds.push(setTimeout(_handleRejectable, this.rejectableDuration));
+        if (this.rejectableDuration != 0) {
+            this.timerIds.push(setTimeout(_handleRejectable, this.rejectableDuration));
+        }
 
         // about --tappable-duration
         if (this.tappableDuration != 0) {

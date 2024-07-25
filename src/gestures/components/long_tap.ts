@@ -1,5 +1,5 @@
-import { GestureEventCallback, PointerPosition } from "../type";
-import { TouchRippleGestureRecogzier } from "./gesture_recognizer";
+import { GestureEventCallback, PointerPosition } from "../../type";
+import { TouchRippleGestureRecogzier } from "../gesture_recognizer";
 
 export class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
     timerId: number;
@@ -27,7 +27,7 @@ export class LongTapGestureRecognizer extends TouchRippleGestureRecogzier {
         }, this.tappableDuration);
     }
 
-    pointerUp(position: PointerPosition): void {
+    pointerUp(_: PointerPosition): void {
         this.reject();
     }
 

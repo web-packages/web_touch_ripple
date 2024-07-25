@@ -7,5 +7,6 @@
         "declarationDir": "dist/types/",
         "allowSyntheticDefaultImports": true,
         "moduleResolution": "Node"
-    }
+    },
+    "include": ["./src/"]
 }

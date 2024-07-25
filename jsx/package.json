@@ -13,6 +13,6 @@
     "@types/react": "^18.3.3"
   },
   "peerDependencies": {
-    "web-touch-ripple": "^1.1.1"
+    "web-touch-ripple": "^1.1.11"
   }
 }

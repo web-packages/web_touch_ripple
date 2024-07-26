@@ -5,7 +5,9 @@ export declare enum GestureRecognizerResult {
     UPDATE = 2
 }
 export declare abstract class GestureRecognizer {
+    /** A listeners that is called when accpeted or rejected. */
     listeners: GestureRecognizerListener[];
+    /** Whether can be accepted naturally(case of being last alone and accepted) */
     isHold: boolean;
     abstract handlePointer(event: PointerEvent, type: PointerType): void;
     accept(): void;
@@ -19,7 +21,9 @@ export declare abstract class GestureRecognizer {
 }
 export declare class TouchRippleGestureRecogzier extends GestureRecognizer {
     constructor();
+    /** A current or last handled pointer position by `handlePointer()` */
     position: PointerPosition;
+    /** Returns the pointer-position object by the given pointer-event. */
     createPosition(event: PointerEvent): PointerPosition;
     handlePointer(event: PointerEvent, type: PointerType): void;
     pointerDown(position: PointerPosition): void;

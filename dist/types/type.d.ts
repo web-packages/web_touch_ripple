@@ -1,5 +1,6 @@
 import { TouchRippleEffectStatus } from "./effect";
 import { GestureRecognizer, GestureRecognizerResult } from "./gestures/gesture_recognizer";
+/** Signature for the factory function of a gesture recognizer. */
 export type GestureRecognizerBuilder = () => GestureRecognizer;
 export type GestureRecognizerListener = (result: GestureRecognizerResult) => void;
 export type GestureEventCallback = ({ x, y }: {

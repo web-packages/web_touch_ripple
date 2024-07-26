@@ -14,12 +14,15 @@ export declare class TouchRippleEffect {
     position: PointerPosition;
     callback: Function;
     isRejectable: boolean;
+    /** Whether to hold event calls until effects are spread all. */
     isWait: boolean;
     option: TouchRippleEffectOption;
     private _status;
     private _statusListeners;
     private _ripple;
-    constructor(position: PointerPosition, callback: Function, isRejectable: boolean, isWait: boolean, option: TouchRippleEffectOption);
+    constructor(position: PointerPosition, callback: Function, isRejectable: boolean, 
+    /** Whether to hold event calls until effects are spread all. */
+    isWait: boolean, option: TouchRippleEffectOption);
     get status(): TouchRippleEffectStatus;
     set status(newValue: TouchRippleEffectStatus);
     set statusListener(callback: TouchRippleEffectStatusListener);

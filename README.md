@@ -82,7 +82,7 @@ export function TestPage() {
 }
 ```
 
-## Static variables of CSS
+## Variables of CSS
 | Name | Description | Default Value
 | ------ | ------ | ------
 | --ripple | The background color of touch-ripple effect. | rgba(0, 0, 0, 0.2)

@@ -1,11 +1,11 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/2217e9dc-befa-4a59-8997-7bebe04b2656">
+    <img src="https://github.com/user-attachments/assets/282341dd-ea80-4e12-9f94-1791f8ad2770">
     <h1>Web Touch Ripple</h1>
     <table>
         <thead>
           <tr>
             <th>Version</th>
-            <th>v1.1.14</th>
+            <th>v1.1.20</th>
           </tr>
         </tbody>
     </table>

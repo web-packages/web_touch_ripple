@@ -69,6 +69,8 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 ### How to use with react in typescript?
 This is can easily implement this by adding import like the code below.
 
+> Refer to [Github for JSX](https://github.com/MTtankkeo/web_touch_ripple/tree/main/jsx) or [NPM for JSX](https://www.npmjs.com/package/web-touch-ripple-jsx) for details.
+
 ```jsx
 import "web-touch-ripple";
 import { TouchRipple } from "web-touch-ripple/jsx";

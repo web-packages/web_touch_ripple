@@ -11,7 +11,7 @@
     </table>
 </div>
 
-Use web components to implement efficient and simple and flexible touch ripple effects.
+This package uses web components to implement efficient and simple and flexible touch ripple effects.
 
 ## Preview
 This is just a preview of a simple example of that package.

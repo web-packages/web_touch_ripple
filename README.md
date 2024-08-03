@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/f02f204a-7950-460e-8595-205ef2249a21">
+    <img src="https://github.com/user-attachments/assets/2217e9dc-befa-4a59-8997-7bebe04b2656">
     <h1>Web Touch Ripple</h1>
     <table>
         <thead>
@@ -82,7 +82,7 @@ export function TestPage() {
 }
 ```
 
-## Static variables of CSS
+## Variables of CSS
 | Name | Description | Default Value
 | ------ | ------ | ------
 | --ripple | The background color of touch-ripple effect. | rgba(0, 0, 0, 0.2)

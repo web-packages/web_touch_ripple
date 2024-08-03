@@ -1,6 +1,6 @@
-import { TouchRippleElement } from "./index";
-import { Point } from "./point";
-import { PointerPosition, TouchRippleEffectStatusListener } from "./type";
+import { Point } from "../point";
+import { PointerPosition, TouchRippleEffectStatusListener } from "../type";
+import { TouchRippleElement } from "./touch_ripple";
 
 export enum TouchRippleEffectStatus {
     NONE,
@@ -14,7 +14,7 @@ export type TouchRippleEffectOption = {
     fadeInCurve: string,
 }
 
-export class TouchRippleEffect {
+export class TouchRippleEffectElement extends HTMLElement {
     private _status: TouchRippleEffectStatus;
     private _statusListeners: TouchRippleEffectStatusListener[] = [];
     private _ripple: HTMLElement;
@@ -23,13 +23,17 @@ export class TouchRippleEffect {
         public position: PointerPosition,
         public callback: Function,
         public isRejectable: boolean,
-        /** Whether to hold event calls until effects are spread all. */
+        /**
+         * Whether to postpone the invocation of the related event callback function until
+         * the end of the ripple effect fade-in animation.
+         */
         public isWait: boolean,
-        public option: TouchRippleEffectOption
+        public option: TouchRippleEffectOption,
+        public parent: TouchRippleElement,
+        public target?: HTMLElement
     ) {
-        isRejectable
-            ? this._status = TouchRippleEffectStatus.NONE
-            : this._status = TouchRippleEffectStatus.ACCEPTED;
+        super();
+        this.target ??= this.parent.firstElementChild as HTMLElement;
     }
 
     get status() { return this._status };
@@ -78,7 +82,7 @@ export class TouchRippleEffect {
         });
         this.dispose();
     }
-    
+
     createElement(
         parent: TouchRippleElement,
         target: HTMLElement,
@@ -96,7 +100,7 @@ export class TouchRippleEffect {
             var blurRadiusValue = Number(blurRadius.replace("px", ""));
         }
 
-        let rippleSize = new Point(centerX, centerY).distance(0, 0) * 2;
+        let rippleSize  = new Point(centerX, centerY).distance(0, 0) * 2;
             rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
             rippleSize += blurRadiusValue * 2;
 
@@ -164,3 +168,5 @@ export class TouchRippleEffect {
         this._ripple = null;
     }
 }
+
+customElements.define("touch-ripple-effect", TouchRippleEffectElement);

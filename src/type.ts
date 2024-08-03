@@ -1,4 +1,5 @@
-import { TouchRippleEffectStatus } from "./effect";
+
+import { TouchRippleEffectStatus } from "./components/touch_ripple_effect";
 import { GestureRecognizer, GestureRecognizerResult } from "./gestures/gesture_recognizer";
 
 /** Signature for the factory function of a gesture recognizer. */

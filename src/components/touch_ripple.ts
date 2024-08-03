@@ -1,21 +1,25 @@
-import { TouchRippleEffect, TouchRippleEffectOption, TouchRippleEffectStatus } from "../effect";
 import { GestureArena } from "../gestures/gesture_arena";
 import { PointerPosition, PointerType } from "../type";
 import { TapGestureRecognizer } from "../gestures/extensions/tap";
 import { DoubleTapGestureRecognizer } from "../gestures/extensions/double_tap";
 import { LongTapGestureRecognizer } from "../gestures/extensions/long_tap";
-import { TouchRippleGestureRecogzier } from "../gestures/gesture_recognizer";
+import { TouchRippleEffectHoverElement } from "./touch_ripple_effect_hover";
+import { TouchRippleEffectElement, TouchRippleEffectOption, TouchRippleEffectStatus } from "./touch_ripple_effect";
 
 export class TouchRippleElement extends HTMLElement {
     private arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
 
-    /** This element is defined when the hover state. */
-    private hoverEffectElement?: HTMLElement;
+    /**
+     * This value is defined and discarded only when this element
+     * is in the hover state to a user.
+     */
+    private hoverEffectElement?: TouchRippleEffectHoverElement;
 
-    /** Is defined for update the status of added a touch effect. */
-    private activeEffect?: TouchRippleEffect;
-
-    private effects: Map<TouchRippleGestureRecogzier, TouchRippleEffect> = new Map();
+    /**
+     * This value is defining a touch ripple element that is remaining in this element,
+     * i.e. the touch ripple effect element of active state.
+     */
+    private activeEffect?: TouchRippleEffectElement;
 
     /** Called when a user taps or clicks. */
     private _ontap: Function;
@@ -165,27 +169,16 @@ export class TouchRippleElement extends HTMLElement {
         });
     }
 
-    private createHoverEffectElement(): HTMLDivElement {
-        const div = document.createElement("div");
-        div.style.position = "absolute";
-        div.style.top = "0px";
-        div.style.left = "0px";
-        div.style.width = "100%";
-        div.style.height = "100%";
-        div.style.backgroundColor = "var(--ripple-hover, rgba(0, 0, 0, 0.1))";
-        div.style.opacity = "0";
-        div.style.transitionProperty = "opacity";
-        div.style.transitionDuration = "var(--ripple-hover-duration, 0.25s)";
-        div.style.pointerEvents = "none";
-
-        return div;
+    createHoverElement(): TouchRippleEffectHoverElement {
+        return document.createElement("touch-ripple-effect-hover") as TouchRippleEffectHoverElement;
     }
 
+    /** Called when a user starts hovering over render area of this element. */
     onHoverStart() {
         const parent = this.child;
 
         if (this.hoverEffectElement == null) {
-            parent.appendChild(this.hoverEffectElement = this.createHoverEffectElement());
+            parent.appendChild(this.hoverEffectElement = this.createHoverElement());
         }
     
         this.hoverEffectElement.ontransitionend = null;
@@ -193,6 +186,7 @@ export class TouchRippleElement extends HTMLElement {
         this.hoverEffectElement.style.opacity = "1";
     }
 
+    /** Called when pointer position of a user leaves render area of this element. */
     onHoverEnd() {
         if (this.hoverEffectElement) {
             const hoverEffect = this.hoverEffectElement;
@@ -213,7 +207,7 @@ export class TouchRippleElement extends HTMLElement {
             fadeInDuration: "var(--ripple-fadein-duration, 0.25s)",
             fadeInCurve: "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))"
         },
-    ): TouchRippleEffect {
+    ): TouchRippleEffectElement {
         const overlapBehavior = this.getPropertyByName("--ripple-overlap-behavior") ?? "overlappable";
         if (overlapBehavior == "\"cancel\"") {
             this.activeEffect?.cancel(this.child);
@@ -221,13 +215,14 @@ export class TouchRippleElement extends HTMLElement {
             return;
         }
 
-        const effect = new TouchRippleEffect(
+        const effect = new TouchRippleEffectElement(
             position,
             callback,
             isRejectable,
             this.hasAttribute("wait"),
             option,
-        );
+            this,
+        )
 
         this.child.appendChild(effect.createElement(this, this.child));
 

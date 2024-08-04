@@ -139,7 +139,7 @@ export class TouchRippleElement extends HTMLElement {
         }
     }
 
-    initPointerEvent(element: HTMLElement = this) {
+    initPointerEvent(element: HTMLElement) {
         const useHoverEffect = this.getBooleanByName("--ripple-use-hover") ?? true;
 
         element.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
@@ -171,11 +171,11 @@ export class TouchRippleElement extends HTMLElement {
 
             // A gestures competition related.
             {
-                this.initPointerEvent();
-
                 let connection = TouchRippleConnectionElement.ancestorOf(this);
                 if (connection) {
                     this.initPointerEvent(connection);
+                } else {
+                    this.initPointerEvent(this);
                 }
             }
         });

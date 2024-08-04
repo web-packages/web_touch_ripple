@@ -30,7 +30,8 @@
     "client-side",
     "touch",
     "effect",
-    "touch effect"
+    "touch effect",
+    "material"
   ],
   "author": "Dev Ttangkong",
   "license": "MIT",

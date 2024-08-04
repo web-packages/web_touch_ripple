@@ -66,6 +66,29 @@ This is can implement by adding a attribute `wait` to a touch-ripple element.
 <touch-ripple ontap="() => ..." wait>
 ```
 
+### How to connect gestures in parent to a child touch-ripple element?
+To connect gestures from a parent element to a child touch-ripple element, you need to using `<touch-ripple-connection>` element, so it can be done very easily.
+
+#### Example
+> __See Also__<br>
+> For the sake of example code simplicity, style definitions have been omitted.
+
+```html
+<touch-ripple-connection>
+    <div style="display: flex; justify-content: center; padding: 50px;"> <!-- from -->
+        <touch-ripple ontap="console.log('hello world')">
+            <div> <!-- to -->
+                <h1>Touch Ripple Connection</h1>
+                <span>When using touch-ripple-connection element (by declarating in the parent.)</span>
+            </div>
+        </touch-ripple>
+    </div>
+</touch-ripple-connection>
+```
+
+#### Example Preview
+![touch-ripple-connection](https://github.com/user-attachments/assets/5a946016-b3db-4275-bfae-48f2a10459b4)
+
 ### How to use with react in typescript?
 This is can easily implement this by adding import like the code below.
 

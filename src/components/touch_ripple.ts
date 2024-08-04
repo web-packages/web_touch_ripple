@@ -5,6 +5,7 @@ import { DoubleTapGestureRecognizer } from "../gestures/extensions/double_tap";
 import { LongTapGestureRecognizer } from "../gestures/extensions/long_tap";
 import { TouchRippleEffectHoverElement } from "./touch_ripple_effect_hover";
 import { TouchRippleEffectElement, TouchRippleEffectOption, TouchRippleEffectStatus } from "./touch_ripple_effect";
+import { TouchRippleConnectionElement } from "./touch_ripple_connection";
 
 export class TouchRippleElement extends HTMLElement {
     private arena: GestureArena = new GestureArena({isKeepAliveLastPointerUp: true});
@@ -138,13 +139,27 @@ export class TouchRippleElement extends HTMLElement {
         }
     }
 
+    initPointerEvent(element: HTMLElement = this) {
+        const useHoverEffect = this.getBooleanByName("--ripple-use-hover") ?? true;
+
+        element.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
+        element.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
+        element.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
+        element.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
+        element.onmouseleave    = e => this.arena.handlePointer(e as PointerEvent, PointerType.CANCEL); // for touch env
+
+        if (!('ontouchstart' in window) && useHoverEffect) {
+            element.onmouseenter = () => this.onHoverStart();
+            element.onmouseleave = () => this.onHoverEnd();
+        }
+    }
+
     connectedCallback() {
         // Sets a transparent to a touch effect color of chrome.
         this.style["-webkit-tap-highlight-color"] = "transparent";
 
         requestAnimationFrame(() => {
-            const useHoverEffect = this.getBooleanByName("--ripple-use-hover") ?? true;
-            const child = this.child;
+            let child = this.child;
             if (child == null) {
                 throw "This element must be exists child element.";
             }
@@ -154,17 +169,14 @@ export class TouchRippleElement extends HTMLElement {
             child.style.userSelect = "none";
             child.style.touchAction = "manipulation";
 
-            { // A gestures competition related.
-                this.onpointerdown   = e => this.arena.handlePointer(e, PointerType.DOWN);
-                this.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
-                this.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
-                this.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
-                this.onmouseleave    = e => this.arena.handlePointer(e as PointerEvent, PointerType.CANCEL); // for touch env
-            }
+            // A gestures competition related.
+            {
+                this.initPointerEvent();
 
-            if (!('ontouchstart' in window) && useHoverEffect) {
-                child.onmouseenter = () => this.onHoverStart();
-                child.onmouseleave = () => this.onHoverEnd();
+                let connection = TouchRippleConnectionElement.ancestorOf(this);
+                if (connection) {
+                    this.initPointerEvent(connection);
+                }
             }
         });
     }

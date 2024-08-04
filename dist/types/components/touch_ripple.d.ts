@@ -33,6 +33,7 @@ export declare class TouchRippleElement extends HTMLElement {
     getBooleanByName(name: string, scope?: this): boolean;
     /** Initializes gesture-recognizer builders for arena. */
     initBuiler(): void;
+    initPointerEvent(element?: HTMLElement): void;
     connectedCallback(): void;
     createHoverElement(): TouchRippleEffectHoverElement;
     /** Called when a user starts hovering over render area of this element. */

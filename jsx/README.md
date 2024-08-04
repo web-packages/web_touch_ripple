@@ -5,7 +5,7 @@
         <thead>
           <tr>
             <th>Version</th>
-            <th>v1.0.21</th>
+            <th>v1.0.3</th>
           </tr>
         </tbody>
     </table>
@@ -25,3 +25,9 @@ This package provides JSX module about web-touch-ripple package.
 | onLongTap | Called when a user long press or long clicks or long pointer-down. | VoidFunction
 | wait | Whether to postpone the invocation of the related event callback function until the end of the ripple effect fade-in animation. | boolean
 | children | Hmm... This is just children elements of JSX about \<TouchRipple\>, And i'm think so easy, right?. | JSX.Element
+
+## Properties of \<TouchRippleConnection\>
+
+| Identifier | Description | Type
+| ------ | ------ | ------
+| children | Hmm... This is just children elements of JSX about \<TouchRippleConnection\>, And i'm think so easy, right?. | JSX.Element

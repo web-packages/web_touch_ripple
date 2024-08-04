@@ -34,6 +34,17 @@ export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, children}: {
 
     return (
         /** @ts-ignore */
-        <touch-ripple ref={ref}>{children}</touch-ripple>
+        <touch-ripple ref={ref} children={children} />
     );
+}
+
+/**
+ * This component used when to connect gestures from a parent element
+ * to a child touch-ripple element.
+ */
+export function TouchRippleConnection({children}: {
+    children: JSX.Element,
+}) {
+    /** @ts-ignore */
+    return <touch-ripple-connection children={children} />
 }

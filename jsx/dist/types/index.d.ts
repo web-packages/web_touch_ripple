@@ -19,3 +19,10 @@ export declare function TouchRipple({ onTap, onDoubleTap, onLongTap, wait, child
     wait?: boolean;
     children: JSX.Element;
 }): import("react/jsx-runtime").JSX.Element;
+/**
+ * This component used when to connect gestures from a parent element
+ * to a child touch-ripple element.
+ */
+export declare function TouchRippleConnection({ children }: {
+    children: JSX.Element;
+}): import("react/jsx-runtime").JSX.Element;

@@ -1,6 +1,6 @@
 {
   "name": "web-touch-ripple",
-  "version": "1.1.20",
+  "version": "1.1.30",
   "description": "This package provides visual representation of the pointer event to users.",
   "repository": "https://github.com/MTtankkeo/web_touch_ripple",
   "bugs": "https://github.com/MTtankkeo/web_touch_ripple/issues",

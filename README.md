@@ -11,7 +11,7 @@
     </table>
 </div>
 
-Use web components to implement efficient and simple and flexible touch ripple effects.
+This package provides visual representation of the pointer event to users, And using web components to implement efficient and simple and flexible touch ripple effects.
 
 ## Preview
 This is just a preview of a simple example of that package.

@@ -92,7 +92,15 @@ export class TouchRippleEffectElement extends HTMLElement {
         const targetY = this.position.y - targetRact.top;
         const centerX = parent.offsetWidth / 2;
         const centerY = parent.offsetHeight / 2;
-        const performFadeout = () => { if (this.isWait) { this.notify() } this.fadeout(target); }
+        const performFadeout = () => {
+            if (this.isWait) {
+                this.notify();
+
+                // Clean up a registered event callback to prevent a redemption called.
+                ripple.ontransitionend = null;
+            }
+            this.fadeout(target);
+    }
 
         // Initializes setting values.
         {

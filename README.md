@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/282341dd-ea80-4e12-9f94-1791f8ad2770">
+    <img src="https://github.com/user-attachments/assets/9ad8e5e7-d73b-4059-98a3-57318ee7244f">
     <h1>Web Touch Ripple</h1>
     <table>
         <thead>

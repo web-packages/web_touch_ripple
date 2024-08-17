@@ -6,3 +6,6 @@
 
 # 1.1.31
 - Fixed an issue where the event callback function was called twice when the "wait" option was enabled and the `rejectable` state was false.
+
+# 1.1.32
+- Fixed an issue where events were called twice and an issue where the gesture cancellation was not detected.

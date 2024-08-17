@@ -95,12 +95,12 @@ export class TouchRippleEffectElement extends HTMLElement {
         const performFadeout = () => {
             if (this.isWait) {
                 this.notify();
-
-                // Clean up a registered event callback to prevent a redemption called.
-                ripple.ontransitionend = null;
             }
             this.fadeout(target);
-    }
+
+            // Clean up a registered event callback to prevent a redemption called.
+            ripple.ontransitionend = null;
+        }
 
         // Initializes setting values.
         {

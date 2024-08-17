@@ -146,6 +146,7 @@ export class TouchRippleElement extends HTMLElement {
         element.onpointermove   = e => this.arena.handlePointer(e, PointerType.MOVE);
         element.onpointerup     = e => this.arena.handlePointer(e, PointerType.UP);
         element.onpointercancel = e => this.arena.handlePointer(e, PointerType.CANCEL);
+        element.onpointerleave  = e => this.arena.handlePointer(e, PointerType.CANCEL);
         element.onmouseleave    = e => this.arena.handlePointer(e as PointerEvent, PointerType.CANCEL); // for touch env
 
         if (!('ontouchstart' in window) && useHoverEffect) {
@@ -192,7 +193,7 @@ export class TouchRippleElement extends HTMLElement {
         if (this.hoverEffectElement == null) {
             parent.appendChild(this.hoverEffectElement = this.createHoverElement());
         }
-    
+
         this.hoverEffectElement.ontransitionend = null;
         this.hoverEffectElement.getBoundingClientRect(); // for reflow
         this.hoverEffectElement.style.opacity = "1";

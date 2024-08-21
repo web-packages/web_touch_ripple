@@ -10,7 +10,7 @@
 # 1.1.32
 - Fixed an issue where events were called twice and an issue where the gesture cancellation was not detected.
 
-# 1.1.4
+# 1.1.41
 - Added new options `--ripple-spread-duration` and `--ripple-spread-curve`.
 - Fixed calculating the position about ripple effect.
 - Fixed an issue where the ripple effect position was offset due to the margin of child elements.

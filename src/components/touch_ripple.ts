@@ -126,7 +126,9 @@ export class TouchRippleElement extends HTMLElement {
                         this._onlongtap,
                         true,
                         {
+                            spreadDuration: "var(--ripple-long-tappable-duration, 1s)",
                             fadeInDuration: "var(--ripple-long-tappable-duration, 1s)",
+                            spreadCurve: "var(--ripple-long-tappable-curve, linear(0, 1))",
                             fadeInCurve: "var(--ripple-long-tappable-curve, linear(0, 1))"
                         }
                     ),

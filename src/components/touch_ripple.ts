@@ -176,7 +176,7 @@ export class TouchRippleElement extends HTMLElement {
                 if (connection) {
                     this.initPointerEvent(connection);
                 } else {
-                    this.initPointerEvent(this);
+                    this.initPointerEvent(child);
                 }
             }
         });
@@ -216,10 +216,7 @@ export class TouchRippleElement extends HTMLElement {
         position: PointerPosition,
         callback: Function,
         isRejectable: boolean,
-        option: TouchRippleEffectOption = {
-            fadeInDuration: "var(--ripple-fadein-duration, 0.25s)",
-            fadeInCurve: "var(--ripple-fadein-curve, cubic-bezier(.2,.3,.4,1))"
-        },
+        option?: Partial<TouchRippleEffectOption>,
     ): TouchRippleEffectElement {
         const overlapBehavior = this.getPropertyByName("--ripple-overlap-behavior") ?? "overlappable";
         if (overlapBehavior == "\"cancel\"") {
@@ -228,12 +225,21 @@ export class TouchRippleElement extends HTMLElement {
             return;
         }
 
+        const FINAL_OPTIONS: TouchRippleEffectOption = {...{
+            spreadDuration: "var(--ripple-spread-duration, 0.3s)",
+            spreadCurve: "var(--ripple-spread-curve, cubic-bezier(.2,.3,.4,1))",
+            fadeInDuration: "var(--ripple-fadein-duration, 0.2s)",
+            fadeInCurve: "var(--ripple-fadein-curve)",
+            fadeOutDuration: "var(--ripple-fadeout-duration, 0.4s)",
+            fadeOutCurve: "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))"
+        }, ...option};
+
         const effect = new TouchRippleEffectElement(
             position,
             callback,
             isRejectable,
             this.hasAttribute("wait"),
-            option,
+            FINAL_OPTIONS,
             this,
         )
 

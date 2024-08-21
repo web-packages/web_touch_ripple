@@ -5,13 +5,15 @@
         <thead>
           <tr>
             <th>Version</th>
-            <th>v1.1.32</th>
+            <th>v1.1.4</th>
           </tr>
         </tbody>
     </table>
 </div>
 
 This package provides visual representation of the pointer event to users, And using web components to implement efficient and simple and flexible touch ripple effects.
+
+> See Also, If you want the change-log by version for this package. refer to [Change Log](CHANGELOG.md) for details.
 
 ## Preview
 This is just a preview of a simple example of that package.
@@ -113,12 +115,14 @@ export function TestPage() {
 | --ripple | The background color of touch-ripple effect. | rgba(0, 0, 0, 0.2)
 | --ripple-hover | The background color of touch-ripple effect when the hover state. | rgba(0, 0, 0, 0.1)
 | --ripple-hover-duration | This is duration of fade-in or fade-out about the hover effect. | 0.25s
-| --ripple-fadein-duration | The duration until the ripple effect completely fills the element. | 0.25s
-| --ripple-fadein-curve | This is curve about fade-in and spread animation of ripples. | cubic-bezier(.2,.3,.4,1)
+| --ripple-spread-duration | The duration until the ripple effect completely fills the element. | 0.25s
+| --ripple-spread-curve | This is curve for fade-in and spread animation of ripples. | cubic-bezier(.2,.3,.4,1)
+| --ripple-fadein-duration | The duration of fade-in animation about a ripple effect. | 0.25s
+| --ripple-fadein-curve | This is curve for fade-in animation about a ripple effect. | default of browser
 | --ripple-fadeout-duration | The duration until the ripple effect disappears. | 0.4s
-| --ripple-fadeout-curve | This is curve about fade-out animation of ripples. | default of browser
-| --ripple-cancel-duration | This is curve about fade-out animation of ripples when cancels. | 0s
-| --ripple-cancel-curve | This is curve about fade-out animation of ripples when cancels. | default of browser
+| --ripple-fadeout-curve | This is curve for fade-out animation of ripples. | default of browser
+| --ripple-cancel-duration | This is curve for fade-out animation of ripples when cancels. | 0s
+| --ripple-cancel-curve | This is curve for fade-out animation of ripples when cancels. | default of browser
 | --ripple-blur-radius | The blur effect radius of touch ripple. | 15px
 | --ripple-lower-scale | The ripple scale of start point. | 0.3
 | --ripple-upper-scale | The ripple scale of end point. | 1
@@ -126,7 +130,7 @@ export function TestPage() {
 | --ripple-tappable-duration | After a pointer down occurs, gestures are rejected after this duration. | none
 | --ripple-double-tappable-duration | This duration required to define if it is a double tap. | 0.1s
 | --ripple-long-tappable-duration | This duration required to define if it is a long tap. | 1s
-| --ripple-long-tappable-curve | This is curve about fade-in animation of ripples about long tap. | linear
+| --ripple-long-tappable-curve | This is curve for fade-in animation of ripples about long tap. | linear
 | --ripple-overlap-behavior | This option defines the behavior of a touch ripple when it overlaps. (overlappable, cancel, ignoring) | overlappable
 | --ripple-use-hover | Whether or not to apply the hover effect. | 1 (true)
 

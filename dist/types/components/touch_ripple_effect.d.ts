@@ -6,10 +6,14 @@ export declare enum TouchRippleEffectStatus {
     REJECTED = 2,
     DISPOSED = 3
 }
-export type TouchRippleEffectOption = {
+export interface TouchRippleEffectOption {
+    spreadDuration: string;
+    spreadCurve: string;
     fadeInDuration: string;
     fadeInCurve: string;
-};
+    fadeOutDuration: string;
+    fadeOutCurve: string;
+}
 export declare class TouchRippleEffectElement extends HTMLElement {
     position: PointerPosition;
     callback: Function;

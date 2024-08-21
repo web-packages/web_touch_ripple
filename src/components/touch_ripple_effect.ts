@@ -9,9 +9,13 @@ export enum TouchRippleEffectStatus {
     DISPOSED
 }
 
-export type TouchRippleEffectOption = {
-    fadeInDuration: string,
-    fadeInCurve: string,
+export interface TouchRippleEffectOption {
+    spreadDuration: string;
+    spreadCurve: string;
+    fadeInDuration: string;
+    fadeInCurve: string;
+    fadeOutDuration: string;
+    fadeOutCurve: string;
 }
 
 export class TouchRippleEffectElement extends HTMLElement {
@@ -59,12 +63,13 @@ export class TouchRippleEffectElement extends HTMLElement {
     ) {
         if (parent == null) return;
         if (target == null) return;
-        target.style.transitionDuration = "var(--ripple-fadeout-duration, 0.4s)";
-        target.style.transitionTimingFunction = "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))";
+        target.style.transitionProperty = "opacity"
+        target.style.transitionDuration = this.option.fadeOutDuration;
+        target.style.transitionTimingFunction = this.option.fadeOutCurve;
         target.style.opacity = "0";
         requestAnimationFrame(() => {
             target.ontransitionend = () => parent.removeChild(target);
-        })
+        });
         this.dispose();
     }
 
@@ -74,6 +79,7 @@ export class TouchRippleEffectElement extends HTMLElement {
     ) {
         if (parent == null) return;
         if (target == null) return;
+        target.style.transitionProperty = "opacity"
         target.style.transitionDuration = "var(--ripple-cancel-duration, 0s)";
         target.style.transitionTimingFunction = "var(--ripple-cancel-curve)";
         target.style.opacity = "0";
@@ -87,19 +93,26 @@ export class TouchRippleEffectElement extends HTMLElement {
         parent: TouchRippleElement,
         target: HTMLElement,
     ) {
-        const targetRact = parent.getBoundingClientRect();
-        const targetX = this.position.x - targetRact.left;
-        const targetY = this.position.y - targetRact.top;
-        const centerX = parent.offsetWidth / 2;
-        const centerY = parent.offsetHeight / 2;
+        const targetRect = parent.getBoundingClientRect();
+        const targetStyle = getComputedStyle(target);
+        const targetShiftLeft = parseFloat(targetStyle.marginLeft);
+        const targetShiftTop = parseFloat(targetStyle.marginTop);
+        const targetX = (this.position.x - targetRect.left) - targetShiftLeft;
+        const targetY = (this.position.y - targetRect.top) - targetShiftTop;
+        const centerX = parseFloat(targetStyle.width) / 2;
+        const centerY = parseFloat(targetStyle.height) / 2;
+        let transitionEndCount = 0;
         const performFadeout = () => {
-            if (this.isWait) {
-                this.notify();
-            }
-            this.fadeout(target);
+            if (this.isWait) this.notify();
 
-            // Clean up a registered event callback to prevent a redemption called.
-            ripple.ontransitionend = null;
+            // In this case, transition is independently defined to 'opacity', 'transform'
+            // and has a separate life-cycle.
+            if (transitionEndCount++ == 1) {
+                this.fadeout(target);
+
+                // Clean up a registered event callback to prevent a redemption called.
+                ripple.ontransitionend = null;
+            }
         }
 
         // Initializes setting values.
@@ -130,9 +143,11 @@ export class TouchRippleEffectElement extends HTMLElement {
             ripple.style.opacity = "0";
             ripple.style.transform = "scale(var(--ripple-lower-scale, 0.3))";
             ripple.style.transformOrigin = "center";
+
+            // Sets transition settings by related properties.
             ripple.style.transitionProperty = "opacity, transform";
-            ripple.style.transitionDuration = this.option.fadeInDuration;
-            ripple.style.transitionTimingFunction = this.option.fadeInCurve;
+            ripple.style.transitionDuration = `${this.option.fadeInDuration}, ${this.option.spreadDuration}`;
+            ripple.style.transitionTimingFunction = `${this.option.fadeInCurve}, ${this.option.spreadCurve}`;
         }
 
         queueMicrotask(() => { // is fade-in animation forward.

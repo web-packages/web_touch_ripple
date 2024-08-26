@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "dist/",
-        "module": "ES2022",
+        "module": "ESNext",
         "target": "ES2015",
         "declaration": true,
         "declarationDir": "dist/types/",

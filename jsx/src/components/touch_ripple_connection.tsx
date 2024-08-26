@@ -6,6 +6,5 @@
 export function TouchRippleConnection({children}: {
     children: JSX.Element,
 }) {
-    /** @ts-ignore */
     return <touch-ripple-connection children={children} />
 }

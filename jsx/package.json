@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
+  "keywords": ["jsx", "react", "preact", "web-touch-ripple"],
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "watch": "tsc --project tsconfig.json --watch"

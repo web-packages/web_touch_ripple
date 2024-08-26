@@ -4,6 +4,5 @@ import { jsx as _jsx } from "react/jsx-runtime";
  * to a child touch-ripple element.
  */
 export function TouchRippleConnection({ children }) {
-    /** @ts-ignore */
     return _jsx("touch-ripple-connection", { children: children });
 }

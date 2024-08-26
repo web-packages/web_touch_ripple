@@ -1,6 +1,6 @@
 {
   "name": "web-touch-ripple-jsx",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This package provides JSX module about web-touch-ripple package.",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,7 +10,8 @@
     "watch": "tsc --project tsconfig.json --watch"
   },
   "devDependencies": {
-    "@types/react": "^18.3.3"
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0"
   },
   "peerDependencies": {
     "web-touch-ripple": "^1.1.30"

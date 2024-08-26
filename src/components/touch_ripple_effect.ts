@@ -101,13 +101,14 @@ export class TouchRippleEffectElement extends HTMLElement {
         const targetY = (this.position.y - targetRect.top) - targetShiftTop;
         const centerX = parseFloat(targetStyle.width) / 2;
         const centerY = parseFloat(targetStyle.height) / 2;
+        let transitionStartCount = 0;
         let transitionEndCount = 0;
         const performFadeout = () => {
             if (this.isWait) this.notify();
 
             // In this case, transition is independently defined to 'opacity', 'transform'
             // and has a separate life-cycle.
-            if (transitionEndCount++ == 1) {
+            if (++transitionEndCount == transitionStartCount) {
                 this.fadeout(target);
 
                 // Clean up a registered event callback to prevent a redemption called.
@@ -154,6 +155,11 @@ export class TouchRippleEffectElement extends HTMLElement {
             ripple.getBoundingClientRect(); // reflowed
             ripple.style.opacity = "1";
             ripple.style.transform = "scale(var(--ripple-upper-scale, 1))";
+        });
+
+        // Called when a transition animation started by property.
+        ripple.addEventListener("transitionstart", () => {
+            transitionStartCount += 1;
         });
 
         let isFadeInEnd = false;

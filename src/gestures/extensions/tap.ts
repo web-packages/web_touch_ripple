@@ -25,7 +25,7 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
         }
 
         // about --tap-preview-duration
-        if (this.rejectableDuration != 0) {
+        if (this.rejectableDuration != Infinity) {
             this.timerIds.push(setTimeout(_handleRejectable, this.rejectableDuration));
         }
 

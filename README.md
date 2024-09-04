@@ -5,7 +5,7 @@
         <thead>
           <tr>
             <th>Version</th>
-            <th>v1.1.43</th>
+            <th>v1.1.50</th>
           </tr>
         </tbody>
     </table>
@@ -124,7 +124,7 @@ export function TestPage() {
 | --ripple-fadeout-curve | This is curve for fade-out animation of ripples. | default of browser
 | --ripple-cancel-duration | This is curve for fade-out animation of ripples when cancels. | 0s
 | --ripple-cancel-curve | This is curve for fade-out animation of ripples when cancels. | default of browser
-| --ripple-blur-radius | The blur effect radius of touch ripple. | 15px
+| --ripple-blur-radius | The blur effect radius pixels or percent of touch ripple effect. | 6%
 | --ripple-lower-scale | The ripple scale of start point. | 0.3
 | --ripple-upper-scale | The ripple scale of end point. | 1
 | --ripple-tap-preview-duration | The rejectable duration about tap event. | 0.15s

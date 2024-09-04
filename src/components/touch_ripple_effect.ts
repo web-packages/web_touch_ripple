@@ -1,5 +1,6 @@
 import { Point } from "../point";
 import { PointerPosition, TouchRippleEffectStatusListener } from "../type";
+import { ElementUtils } from "../utils/element";
 import { TouchRippleElement } from "./touch_ripple";
 
 export enum TouchRippleEffectStatus {
@@ -93,14 +94,16 @@ export class TouchRippleEffectElement extends HTMLElement {
         parent: TouchRippleElement,
         target: HTMLElement,
     ) {
-        const targetRect = parent.getBoundingClientRect();
+        const parentRect = parent.getBoundingClientRect();
         const targetStyle = getComputedStyle(target);
+        const targetSize = ElementUtils.sizeOf(targetStyle);
         const targetShiftLeft = parseFloat(targetStyle.marginLeft);
         const targetShiftTop = parseFloat(targetStyle.marginTop);
-        const targetX = (this.position.x - targetRect.left) - targetShiftLeft;
-        const targetY = (this.position.y - targetRect.top) - targetShiftTop;
-        const centerX = parseFloat(targetStyle.width) / 2;
-        const centerY = parseFloat(targetStyle.height) / 2;
+        const targetMax = Math.max(targetSize.width, targetSize.height);
+        const targetX = (this.position.x - parentRect.left) - targetShiftLeft;
+        const targetY = (this.position.y - parentRect.top) - targetShiftTop;
+        const centerX = targetSize.width / 2;
+        const centerY = targetSize.height / 2;
         let transitionStartCount = 0;
         let transitionEndCount = 0;
         const performFadeout = () => {
@@ -118,8 +121,14 @@ export class TouchRippleEffectElement extends HTMLElement {
 
         // Initializes setting values.
         {
-            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "15px";
-            var blurRadiusValue = Number(blurRadius.replace("px", ""));
+            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "6%";
+            if (blurRadius.endsWith("%")) {
+                const percent = Number(blurRadius.replace("%", "")) / 100;
+                const pixcels = targetMax * percent;
+                var blurRadiusValue = Number(pixcels);
+            } else {
+                var blurRadiusValue = Number(blurRadius.replace("px", ""));
+            }
         }
 
         let rippleSize  = new Point(centerX, centerY).distance(0, 0) * 2;
@@ -138,7 +147,7 @@ export class TouchRippleEffectElement extends HTMLElement {
         ripple.style.translate = "-50% -50%";
         ripple.style.borderRadius = "50%";
         ripple.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
-        ripple.style.filter = `blur(${blurRadius})`;
+        ripple.style.filter = `blur(${blurRadiusValue}px)`;
 
         { // is fade-in animation ready.
             ripple.style.opacity = "0";

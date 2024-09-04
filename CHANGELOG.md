@@ -15,6 +15,10 @@
 - Fixed calculating the position about ripple effect.
 - Fixed an issue where the ripple effect position was offset due to the margin of child elements.
 
-# 1.1.42
+# 1.1.42 ~ 43
 - Fixed an issue where `--ripple-tap-preview-duration` was 0 seconds and it was not start the ripple effect animation after pointer-down.
 - Fixed an issue where `--ripple-fadeout-duration` was 0 seconds and it was not start the ripple effect animation of fade-out after fade-in animation ended.
+
+# 1.1.50
+- Fixed an issue where the ripple effect was not fully expanding or was exceeding its bounds due to calculating the size of the target element without considering its padding.
+- Updated --ripple-blur-radius to support percentage (%) values that adjust dynamically based on the size of the element, in addition to previously supporting only fixed pixel values.

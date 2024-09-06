@@ -95,7 +95,6 @@ To connect gestures from a parent element to a child touch-ripple element, you n
 ### How to register an event at the parent level and apply a ripple effect to a specific child element?
 To apply a ripple effect to a specific child element, you can define the selector attribute. This allows you to easily specify the exact child element where the effect will appear, ensuring that the ripple effect is triggered only on the targeted element.
 
-> __Tip__<br>
 > This feature can be very useful in situations where you want to apply an effect to a specific element without changing the element's tree structure, and you only need to define the event on the parent element.
 
 > __See Also__<br>

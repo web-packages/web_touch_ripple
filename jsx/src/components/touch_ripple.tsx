@@ -26,7 +26,7 @@ export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, selector, chil
      * This allows you to control exactly which child element the ripple effect will affect, 
      * without changing the element tree structure.
      */
-    selector: string,
+    selector?: string,
     children: JSX.Element,
 }) {
     const ref = useRef<TouchRippleElement>();

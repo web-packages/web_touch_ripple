@@ -7,7 +7,7 @@ import { TouchRippleElement } from "web-touch-ripple";
  * See Also, If you want to use this component in Preact,
  * you need to refer to [offical docs of Preact](https://preactjs.com/guide/v10/getting-started#aliasing-react-to-preact).
  */
-export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, children}: {
+export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, selector, children}: {
     /** Called when a user taps or clicks. */
     onTap?: VoidFunction,
     /** Called when a user double taps or double clicks. */
@@ -19,6 +19,14 @@ export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, children}: {
      * the end of the ripple effect fade-in animation.
      */
     wait?: boolean,
+    /**
+     * A CSS selector string used to target a specific child element within the component. 
+     * The ripple effect will be applied to this element when a pointer event occurs. 
+     * 
+     * This allows you to control exactly which child element the ripple effect will affect, 
+     * without changing the element tree structure.
+     */
+    selector: string,
     children: JSX.Element,
 }) {
     const ref = useRef<TouchRippleElement>();
@@ -30,6 +38,10 @@ export function TouchRipple({onTap, onDoubleTap, onLongTap, wait, children}: {
         ripple.onlongtap = onLongTap;
 
         wait ? ripple.setAttribute("wait", "") : ripple.removeAttribute("wait");
+
+        selector != null
+            ? ripple.setAttribute("selector", selector)
+            : ripple.removeAttribute("selector");
     }, [onTap, onDoubleTap, onLongTap, wait]);
 
     return (

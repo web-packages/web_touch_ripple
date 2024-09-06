@@ -92,6 +92,27 @@ To connect gestures from a parent element to a child touch-ripple element, you n
 #### Example Preview
 ![touch-ripple-connection](https://github.com/user-attachments/assets/5a946016-b3db-4275-bfae-48f2a10459b4)
 
+### How to register an event at the parent level and apply a ripple effect to a specific child element?
+To apply a ripple effect to a specific child element, you can define the selector attribute. This allows you to easily specify the exact child element where the effect will appear, ensuring that the ripple effect is triggered only on the targeted element.
+
+> __Tip__<br>
+> This feature can be very useful in situations where you want to apply an effect to a specific element without changing the element's tree structure, and you only need to define the event on the parent element.
+
+> __See Also__<br>
+> For the sake of example code simplicity, style definitions have been omitted.
+
+```html
+<touch-ripple ontap="console.log('hello world')" selector=".a">
+    <div>
+        <h1 class="a">Touch Ripple 1</h1>
+        <h1 class="b">Touch Ripple 2</h1>
+    </div>
+</touch-ripple>
+```
+
+#### Example Preview
+
+
 ### How to use with react in typescript?
 This is can easily implement this by adding import like the code below.
 

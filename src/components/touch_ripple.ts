@@ -53,6 +53,13 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     get child(): HTMLElement {
+        const selector = this.getAttribute("selector");
+
+        // When exists a given ripple selector about CSS.
+        if (selector) {
+            return this.querySelector(selector) ?? this.firstElementChild as HTMLElement;
+        }
+
         return this.firstElementChild as HTMLElement;
     }
 

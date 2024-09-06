@@ -22,3 +22,6 @@
 # 1.1.50
 - Fixed an issue where the ripple effect was not fully expanding or was exceeding its bounds due to calculating the size of the target element without considering its padding.
 - Updated --ripple-blur-radius to support percentage (%) values that adjust dynamically based on the size of the element, in addition to previously supporting only fixed pixel values.
+
+# 1.1.60
+- Added `selector` attribute and related features. For more details, please refer to the [README.md](README.md#how-to-register-an-event-at-the-parent-level-and-apply-a-ripple-effect-to-a-specific-child-element).

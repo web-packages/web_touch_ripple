@@ -139,9 +139,9 @@ export function TestPage() {
 | --ripple-hover-duration | This is duration of fade-in or fade-out about the hover effect. | 0.25s
 | --ripple-spread-duration | The duration until the ripple effect completely fills the element. | 0.25s
 | --ripple-spread-curve | This is curve for fade-in and spread animation of ripples. | cubic-bezier(.2,.3,.4,1)
-| --ripple-fadein-duration | The duration of fade-in animation about a ripple effect. | 0.25s
+| --ripple-fadein-duration | The duration of fade-in animation about a ripple effect. | 0.15s
 | --ripple-fadein-curve | This is curve for fade-in animation about a ripple effect. | default of browser
-| --ripple-fadeout-duration | The duration until the ripple effect disappears. | 0.4s
+| --ripple-fadeout-duration | The duration until the ripple effect disappears. | 0.3s
 | --ripple-fadeout-curve | This is curve for fade-out animation of ripples. | default of browser
 | --ripple-cancel-duration | This is curve for fade-out animation of ripples when cancels. | 0s
 | --ripple-cancel-curve | This is curve for fade-out animation of ripples when cancels. | default of browser

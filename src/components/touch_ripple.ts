@@ -237,9 +237,9 @@ export class TouchRippleElement extends HTMLElement {
         const FINAL_OPTIONS: TouchRippleEffectOption = {...{
             spreadDuration: "var(--ripple-spread-duration, 0.3s)",
             spreadCurve: "var(--ripple-spread-curve, cubic-bezier(.2,.3,.4,1))",
-            fadeInDuration: "var(--ripple-fadein-duration, 0.2s)",
+            fadeInDuration: "var(--ripple-fadein-duration, 0.15s)",
             fadeInCurve: "var(--ripple-fadein-curve)",
-            fadeOutDuration: "var(--ripple-fadeout-duration, 0.4s)",
+            fadeOutDuration: "var(--ripple-fadeout-duration, 0.3s)",
             fadeOutCurve: "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))"
         }, ...option};
 

@@ -100,6 +100,8 @@ To apply a ripple effect to a specific child element, you can define the selecto
 > __See Also__<br>
 > For the sake of example code simplicity, style definitions have been omitted.
 
+#### Example
+
 ```html
 <touch-ripple ontap="console.log('hello world')" selector=".a">
     <div>

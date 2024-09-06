@@ -111,7 +111,7 @@ To apply a ripple effect to a specific child element, you can define the selecto
 ```
 
 #### Example Preview
-
+![touch-ripple_selector](https://github.com/user-attachments/assets/b5c18e90-f2a9-476e-ac4e-313d1d7ad3f3)
 
 ### How to use with react in typescript?
 This is can easily implement this by adding import like the code below.

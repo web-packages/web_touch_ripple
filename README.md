@@ -97,10 +97,9 @@ To apply a ripple effect to a specific child element, you can define the selecto
 
 > This feature can be very useful in situations where you want to apply an effect to a specific element without changing the element's tree structure, and you only need to define the event on the parent element.
 
+#### Example
 > __See Also__<br>
 > For the sake of example code simplicity, style definitions have been omitted.
-
-#### Example
 
 ```html
 <touch-ripple ontap="console.log('hello world')" selector=".a">

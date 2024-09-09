@@ -1,3 +1,4 @@
+export { TouchRippleBinding } from "./modules/touch_ripple_binding";
 export { TouchRippleElement } from "./components/touch_ripple";
 export { TouchRippleEffectElement } from "./components/touch_ripple_effect";
 export { TouchRippleEffectHoverElement } from "./components/touch_ripple_effect_hover";

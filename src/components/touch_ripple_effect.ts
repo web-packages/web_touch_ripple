@@ -94,14 +94,14 @@ export class TouchRippleEffectElement extends HTMLElement {
         parent: TouchRippleElement,
         target: HTMLElement,
     ) {
-        const parentRect = parent.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
         const targetStyle = getComputedStyle(target);
         const targetSize = ElementUtils.sizeOf(targetStyle);
         const targetShiftLeft = parseFloat(targetStyle.marginLeft);
         const targetShiftTop = parseFloat(targetStyle.marginTop);
         const targetMax = Math.max(targetSize.width, targetSize.height);
-        const targetX = (this.position.x - parentRect.left) - targetShiftLeft;
-        const targetY = (this.position.y - parentRect.top) - targetShiftTop;
+        const targetX = (this.position.x - targetRect.left) - targetShiftLeft;
+        const targetY = (this.position.y - targetRect.top) - targetShiftTop;
         const centerX = targetSize.width / 2;
         const centerY = targetSize.height / 2;
         let transitionStartCount = 0;

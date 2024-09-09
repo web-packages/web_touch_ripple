@@ -25,3 +25,6 @@
 
 # 1.1.60
 - Added `selector` attribute and related features. For more details, please refer to the [README.md](README.md#how-to-register-an-event-at-the-parent-level-and-apply-a-ripple-effect-to-a-specific-child-element).
+
+# 1.2.0
+- Fixed an issue where elements wrapped by touch-ripple or touch-ripple-connection affected the styling of their parent elements, impacting the expected style definitions. For example, even if a child element's height is set to 100%, if the touch-ripple element is the parent, the child's styles may not be applied correctly due to the parent element's influence.

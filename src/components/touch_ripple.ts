@@ -165,9 +165,6 @@ export class TouchRippleElement extends HTMLElement {
     }
 
     connectedCallback() {
-        // Sets a transparent to a touch effect color of chrome.
-        this.style["-webkit-tap-highlight-color"] = "transparent";
-
         requestAnimationFrame(() => {
             let child = this.child;
             if (child == null) {

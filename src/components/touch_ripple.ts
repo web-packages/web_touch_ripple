@@ -177,13 +177,11 @@ export class TouchRippleElement extends HTMLElement {
             child.style.touchAction = "manipulation";
 
             // A gestures competition related.
-            {
-                let connection = TouchRippleConnectionElement.ancestorOf(this);
-                if (connection) {
-                    this.initPointerEvent(connection);
-                } else {
-                    this.initPointerEvent(child);
-                }
+            let connection = TouchRippleConnectionElement.ancestorOf(this);
+            if (connection) {
+                this.initPointerEvent(connection);
+            } else {
+                this.initPointerEvent(child);
             }
         });
     }
@@ -250,7 +248,6 @@ export class TouchRippleElement extends HTMLElement {
         )
 
         this.child.appendChild(effect.createElement(this, this.child));
-
         return effect;
     }
 
@@ -265,9 +262,10 @@ export class TouchRippleElement extends HTMLElement {
         newVal: string
     ) {
         if (newVal != null) {
-            if (attrName == "ontap") this.ontap = new Function(newVal);
-            if (attrName == "ondoubletap") this.ondoubletap = new Function(newVal);
-            if (attrName == "onlongtap") this.onlongtap = new Function(newVal);
+            const callback = new Function(newVal);
+            if (attrName == "ontap") this.ontap = callback;
+            if (attrName == "ondoubletap") this.ondoubletap = callback;
+            if (attrName == "onlongtap") this.onlongtap = callback;
         }
     }
 }

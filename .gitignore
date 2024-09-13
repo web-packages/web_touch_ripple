@@ -1,3 +1,4 @@
 jsx/node_modules/
 node_modules/
 test/
+package-lock.json

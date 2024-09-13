@@ -28,3 +28,6 @@
 
 # 1.2.0
 - Fixed an issue where elements wrapped by touch-ripple or touch-ripple-connection affected the styling of their parent elements, impacting the expected style definitions. For example, even if a child element's height is set to 100%, if the touch-ripple element is the parent, the child's styles may not be applied correctly due to the parent element's influence.
+
+# 1.2.10
+- Fixed an issue where all event callback functions were called twice when the `wait` option was enabled. The cause of this issue is suspected to have occurred during the transition from keyframe-based animation to an independent CSS transition method in a previous update.

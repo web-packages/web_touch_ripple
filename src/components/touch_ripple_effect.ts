@@ -107,12 +107,16 @@ export class TouchRippleEffectElement extends HTMLElement {
         let transitionStartCount = 0;
         let transitionEndCount = 0;
         const performFadeout = () => {
-            if (this.isWait) this.notify();
-
             // In this case, transition is independently defined to 'opacity', 'transform'
             // and has a separate life-cycle.
             if (++transitionEndCount == transitionStartCount) {
                 this.fadeout(target);
+
+                // When the effect must be invoked after completion for spread animation,
+                // the callback function should be invoked separately during the fadeout stage.
+                if (this.isWait) {
+                    this.notify();
+                }
 
                 // Clean up a registered event callback to prevent a redemption called.
                 ripple.ontransitionend = null;

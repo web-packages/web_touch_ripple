@@ -31,3 +31,6 @@
 
 # 1.2.10
 - Fixed an issue where all event callback functions were called twice when the `wait` option was enabled. The cause of this issue is suspected to have occurred during the transition from keyframe-based animation to an independent CSS transition method in a previous update.
+
+# 1.2.20
+- Fixed an issue where certain gesture actions were incorrectly considered as clicks by ensuring that only the main button (e.g., the left button of the mouse) is recognized as clicked.

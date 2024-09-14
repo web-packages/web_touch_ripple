@@ -56,6 +56,9 @@ export class TouchRippleGestureRecogzier extends GestureRecognizer {
     handlePointer(event: PointerEvent, type: PointerType): void {
         const position = (this.position = this.createPosition(event));
 
+        // Allow only the main button (e.g. left button of mouse).
+        if (event.button > 0) return this.reject();
+
         if (type == PointerType.DOWN) this.pointerDown(position);
         if (type == PointerType.MOVE) this.pointerMove(position);
         if (type == PointerType.UP) this.pointerUp(position);

@@ -24,6 +24,9 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
             this.onTapRejectable(position);
         }
 
+        // Should can only be accept or reject when prointer-up.
+        this.hold();
+
         // about --tap-preview-duration
         if (this.rejectableDuration != Infinity) {
             this.timerIds.push(setTimeout(_handleRejectable, this.rejectableDuration));
@@ -33,6 +36,10 @@ export class TapGestureRecognizer extends TouchRippleGestureRecogzier {
         if (this.tappableDuration != 0) {
             this.timerIds.push(setTimeout(this.reject.bind(this), this.tappableDuration));
         }
+    }
+
+    pointerUp(_: PointerPosition): void {
+        this.release();
     }
 
     dispose(): void {

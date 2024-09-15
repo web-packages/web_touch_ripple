@@ -92,8 +92,8 @@ export class TouchRippleElement extends HTMLElement {
 
         if (this._ontap != null) {
             const tappableDuration = this.getDurationByName("--ripple-tappable-duration") ?? 0;
-            const rejectableDuration = this._onlongtap != null
-                ? 0.0
+            const rejectableDuration = this._onlongtap || this._ondoubletap
+                ? Infinity
                 : previewDuration;
 
             this.arena.registerBuilder(() => {

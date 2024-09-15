@@ -85,10 +85,12 @@ export class GestureArena {
         const isKeepAliveLastPointerUp = this.option.isKeepAliveLastPointerUp;
 
         // Accept a last recognizer that is un-holded survivor.
-        if (isKeepAliveLastPointerUp && (type == PointerType.UP || type == null) && this.recognizers.length == 1) {
+        if (isKeepAliveLastPointerUp && (type == PointerType.UP || !type) && this.recognizers.length == 1) {
             const last = this.recognizers[0];
 
-            if(!last.isHold) last.accept();
+            if(!last.isHold) {
+                last.accept();
+            }
         }
     }
 

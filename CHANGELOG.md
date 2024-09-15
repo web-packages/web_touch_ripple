@@ -37,3 +37,7 @@
 
 # 1.2.30
 - Fixed an issue where applying overflow: hidden to ensure that the touch ripple effect was confined within the child elements caused significant rendering performance degradation. The solution now avoids applying this style when the effect is not present or active, resulting in a substantial performance improvement.
+
+# 1.3.0
+- Fixed an issue where, in a gesture arena, if competing gestures (e.g., double-tap and long-tap) were present, the scenario where a gesture should ultimately win after pointer up, even if the competing gestures lose, was not being correctly handled.
+- Fixed an issue where using elements like `<div class="ripple">`, which could lead to duplication, was replaced with a custom element like `<touch-ripple-effect>` to manage its own animation and DOM tree removal.

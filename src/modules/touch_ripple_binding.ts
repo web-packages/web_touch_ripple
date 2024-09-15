@@ -21,11 +21,10 @@ export class TouchRippleBinding {
         `);
 
         sheet.insertRule(`
-            touch-ripple *:has(touch-ripple-effect-hover),
-            touch-ripple *:has(.ripple) {
+            touch-ripple *:has(> touch-ripple-effect-hover),
+            touch-ripple *:has(> .ripple) {
                 position: relative;
                 overflow: hidden;
-                userSelect: none;
                 touchAction: manipulation;
             }
         `);

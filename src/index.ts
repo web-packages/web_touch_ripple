@@ -7,4 +7,4 @@ export { TouchRippleConnectionElement } from "./components/touch_ripple_connecti
 export { GestureArena } from "./gestures/gesture_arena";
 export { GestureRecognizer } from "./gestures/gesture_recognizer";
 
-addEventListener("DOMContentLoaded", () => TouchRippleBinding.initialize());
+addEventListener("DOMContentLoaded", () => TouchRippleBinding.instance.initialize());

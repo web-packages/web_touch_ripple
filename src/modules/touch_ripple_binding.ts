@@ -1,6 +1,14 @@
 
 export class TouchRippleBinding {
-    static initialize() {
+    private static _instance: TouchRippleBinding;
+    private constructor() {}
+
+    static get instance() {
+        return this._instance ?? (this._instance = new TouchRippleBinding());
+    }
+
+    /** Initializes statically applied CSS-related values for `TouchRipple`. */
+    initialize() {
         const sheet = new CSSStyleSheet();
         sheet.insertRule(`
             touch-ripple, touch-ripple-connection {

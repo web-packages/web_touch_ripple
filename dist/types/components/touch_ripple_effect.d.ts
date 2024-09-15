@@ -1,12 +1,16 @@
 import { PointerPosition, TouchRippleEffectStatusListener } from "../type";
 import { TouchRippleElement } from "./touch_ripple";
-/** Signature for the enumeration that defines status about `TouchRippleEffectElement`. */
+/** Signature for the enumeration that defines status values about `TouchRippleEffectElement`. */
 export declare enum TouchRippleEffectStatus {
     NONE = 0,
     ACCEPTED = 1,
     REJECTED = 2,
     DISPOSED = 3
 }
+/**
+ * Signature for the interface that defines custom property animation-related
+ * identifiers about `TouchRippleEffectElement`.
+ */
 export interface TouchRippleEffectOption {
     spreadDuration: string;
     spreadCurve: string;

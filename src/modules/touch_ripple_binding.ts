@@ -25,7 +25,8 @@ export class TouchRippleBinding {
             touch-ripple *:has(> .ripple) {
                 position: relative;
                 overflow: hidden;
-                touchAction: manipulation;
+                user-select: none;
+                touch-action: manipulation;
             }
         `);
 

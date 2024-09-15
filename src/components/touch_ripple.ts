@@ -224,7 +224,7 @@ export class TouchRippleElement extends HTMLElement {
             return;
         }
 
-        const FINAL_OPTIONS: TouchRippleEffectOption = {...{
+        const OPTION: TouchRippleEffectOption = {...{
             spreadDuration: "var(--ripple-spread-duration, 0.3s)",
             spreadCurve: "var(--ripple-spread-curve, cubic-bezier(.2,.3,.4,1))",
             fadeInDuration: "var(--ripple-fadein-duration, 0.15s)",
@@ -233,16 +233,18 @@ export class TouchRippleElement extends HTMLElement {
             fadeOutCurve: "var(--ripple-fadeout-curve, cubic-bezier(.15,.5,.5,1))"
         }, ...option};
 
+        const isWait = this.hasAttribute("wait");
         const effect = new TouchRippleEffectElement(
             position,
             callback,
             isRejectable,
-            this.hasAttribute("wait"),
-            FINAL_OPTIONS,
-            this,
+            isWait,
+            OPTION,
+            this,      // parent
+            this.child // target
         )
 
-        this.child.appendChild(effect.createElement(this, this.child));
+        this.child.appendChild(effect);
         return effect;
     }
 

@@ -25,22 +25,21 @@ export declare class TouchRippleEffectElement extends HTMLElement {
     isWait: boolean;
     option: TouchRippleEffectOption;
     parent: TouchRippleElement;
-    target?: HTMLElement;
+    target: HTMLElement;
     private _status;
     private _statusListeners;
-    private _ripple;
     constructor(position: PointerPosition, callback: Function, isRejectable: boolean, 
     /**
      * Whether to postpone the invocation of the related event callback function until
      * the end of the ripple effect fade-in animation.
      */
-    isWait: boolean, option: TouchRippleEffectOption, parent: TouchRippleElement, target?: HTMLElement);
+    isWait: boolean, option: TouchRippleEffectOption, parent: TouchRippleElement, target: HTMLElement);
     get status(): TouchRippleEffectStatus;
     set status(newValue: TouchRippleEffectStatus);
     set statusListener(callback: TouchRippleEffectStatusListener);
     notify(): void;
-    fadeout(parent: HTMLElement, target?: HTMLElement): void;
-    cancel(parent: HTMLElement, target?: HTMLElement): void;
-    createElement(parent: TouchRippleElement, target: HTMLElement): HTMLElement;
+    fadeout(parent?: HTMLElement): void;
+    cancel(parent?: HTMLElement): void;
+    connectedCallback(): void;
     dispose(): void;
 }

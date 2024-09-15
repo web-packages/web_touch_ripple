@@ -171,11 +171,6 @@ export class TouchRippleElement extends HTMLElement {
                 throw "This element must be exists child element.";
             }
 
-            child.style.position = "relative";
-            child.style.overflow = "hidden";
-            child.style.userSelect = "none";
-            child.style.touchAction = "manipulation";
-
             // A gestures competition related.
             let connection = TouchRippleConnectionElement.ancestorOf(this);
             if (connection) {

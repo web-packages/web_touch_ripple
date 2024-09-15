@@ -34,3 +34,6 @@
 
 # 1.2.20
 - Fixed an issue where certain gesture actions were incorrectly considered as clicks by ensuring that only the main button (e.g., the left button of the mouse) is recognized as clicked.
+
+# 1.2.30
+- Fixed an issue where applying overflow: hidden to ensure that the touch ripple effect was confined within the child elements caused significant rendering performance degradation. The solution now avoids applying this style when the effect is not present or active, resulting in a substantial performance improvement.

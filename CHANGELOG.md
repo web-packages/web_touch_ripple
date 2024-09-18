@@ -43,6 +43,8 @@
 - Fixed an issue where using elements like `<div class="ripple">`, which could lead to duplication, was replaced with a custom element like `<touch-ripple-effect>` to manage its own animation and DOM tree removal.
 
 # 1.3.20
-- Fixed an issue where the ripple effect would not fully expand when the size of the element changed during the ripple spreading.
+- Fixed an issue where the ripple effect would not fully expand when the size of the element changed during ripple spreading, by applying a temporary workaround to mitigate the inconvenience. (future update planned about it).
+
 - Fixed an issue where the fade-in animation was skipped at the start of the ripple effect. This issue occurred because `requestAnimationFrame` was used to handle intermediate steps, causing the element not to reflow when it was unnecessary. As a result, the browser could not determine the transition animation's start and end properly.
+
 - Updated the ripple effect to apply the willChange property, enabling GPU acceleration.

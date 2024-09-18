@@ -1,4 +1,4 @@
-import { DOMRectUtil } from "@web-package/utility";
+import { DOMRectUtil, ElementUtil } from "@web-package/utility";
 import { Point } from "../point";
 import { PointerPosition, TouchRippleEffectStatusListener } from "../type";
 import { TouchRippleElement } from "./touch_ripple";
@@ -135,16 +135,21 @@ export class TouchRippleEffectElement extends HTMLElement {
             rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
             rippleSize += blurRadiusValue * 2;
 
+        // About fixed an issue where in case the size changes in the middle
+        const rippleWidth = rippleSize / targetSize.width * 100;
+        const rippleHeight = rippleSize / targetSize.height * 100;
+
         // Sets style properties for the ripple position and intrinsic size settings.
         this.style.position = "absolute";
         this.style.left = `${targetX}px`;
         this.style.top = `${targetY}px`;
-        this.style.width = `${rippleSize}px`;
-        this.style.height = `${rippleSize}px`;
+        this.style.width = `${rippleWidth}%`;
+        this.style.height = `${rippleHeight}%`;
         this.style.pointerEvents = "none";
         this.style.translate = "-50% -50%";
         this.style.borderRadius = "50%";
         this.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
+        this.style.willChange = "transform";
         this.style.filter = `blur(${blurRadiusValue}px)`;
 
         // Sets style properties for fade-in animation to ready phase. (start)
@@ -152,14 +157,14 @@ export class TouchRippleEffectElement extends HTMLElement {
         this.style.transform = "scale(var(--ripple-lower-scale, 0.3))";
         this.style.transformOrigin = "center";
 
+        ElementUtil.reflow(target);
+
         // Sets style properties for fade-in animation to forward. (end)
-        requestAnimationFrame(() => { 
-            this.style.transitionProperty = "opacity, transform";
-            this.style.transitionDuration = `${this.option.fadeInDuration}, ${this.option.spreadDuration}`;
-            this.style.transitionTimingFunction = `${this.option.fadeInCurve}, ${this.option.spreadCurve}`;
-            this.style.opacity = "1";
-            this.style.transform = "scale(var(--ripple-upper-scale, 1))";
-        });
+        this.style.transitionProperty = "opacity, transform";
+        this.style.transitionDuration = `${this.option.fadeInDuration}, ${this.option.spreadDuration}`;
+        this.style.transitionTimingFunction = `${this.option.fadeInCurve}, ${this.option.spreadCurve}`;
+        this.style.opacity = "1";
+        this.style.transform = "scale(var(--ripple-upper-scale, 1))";
 
         // Called when a transition animation started by property.
         this.addEventListener("transitionstart", () => {

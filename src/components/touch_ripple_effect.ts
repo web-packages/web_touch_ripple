@@ -28,6 +28,18 @@ export class TouchRippleEffectElement extends HTMLElement {
     private _status: TouchRippleEffectStatus;
     private _statusListeners: TouchRippleEffectStatusListener[] = [];
 
+    /**
+     * This value is used to exclude layout calculations when the observer is initially
+     * triggered as it starts observing an element that is target.
+    */
+    private _markNeedsLayout: boolean = false;
+
+    /**
+     * The observer is defined to be called when the size of the element where a ripple effect
+     * is applied changes, rather than a ripple effect itself.
+     */
+    private _resizeObserver: ResizeObserver;
+
     constructor(
         public position: PointerPosition,
         public callback: Function,
@@ -84,7 +96,8 @@ export class TouchRippleEffectElement extends HTMLElement {
         });
     }
 
-    connectedCallback() {
+    /** Sets style properties for the ripple position and intrinsic size settings. */
+    performLayout() {
         const target = this.target;
         const parent = this.parent;
         const targetStyle = getComputedStyle(target);
@@ -100,6 +113,49 @@ export class TouchRippleEffectElement extends HTMLElement {
         const targetY = (this.position.y - targetRect.top) - targetShiftTop;
         const centerX = targetSize.width / 2;
         const centerY = targetSize.height / 2;
+
+        const getBlurRadius = function() {
+            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "6%";
+            if (blurRadius.endsWith("%")) {
+                const percent = Number(blurRadius.replace("%", "")) / 100;
+                const pixcels = targetMax * percent;
+                return Number(pixcels);
+            }
+
+            return Number(blurRadius.replace("px", ""));
+        }
+
+        const getRippleSize = function(blurRadius: number) {
+            let rippleSize  = new Point(centerX, centerY).distance(0, 0) * 2;
+                rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
+                rippleSize += blurRadius * 2;
+
+            return rippleSize;
+        }
+
+        const blurRedius = getBlurRadius();
+        const rippleSize = getRippleSize(blurRedius);
+
+        this.style.position = "absolute";
+        this.style.left = `${targetX}px`;
+        this.style.top = `${targetY}px`;
+        this.style.width = `${rippleSize}px`;
+        this.style.height = `${rippleSize}px`;
+        this.style.pointerEvents = "none";
+        this.style.translate = "-50% -50%";
+        this.style.borderRadius = "50%";
+        this.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
+        this.style.willChange = "transform";
+        this.style.filter = `blur(${blurRedius}px)`;
+    }
+
+    disconnectedCallback() {
+        this._resizeObserver.disconnect();
+        this._resizeObserver = null;
+    }
+
+    connectedCallback() {
+        const target = this.target;
         let transitionStartCount = 0;
         let transitionEndCount = 0;
         const performFadeout = () => {
@@ -119,38 +175,22 @@ export class TouchRippleEffectElement extends HTMLElement {
             }
         }
 
-        // Initializes setting values.
-        {
-            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "6%";
-            if (blurRadius.endsWith("%")) {
-                const percent = Number(blurRadius.replace("%", "")) / 100;
-                const pixcels = targetMax * percent;
-                var blurRadiusValue = Number(pixcels);
-            } else {
-                var blurRadiusValue = Number(blurRadius.replace("px", ""));
-            }
-        }
+        // Performs layout calculation based on a target element size.
+        this.performLayout();
 
-        let rippleSize  = new Point(centerX, centerY).distance(0, 0) * 2;
-            rippleSize += new Point(centerX, centerY).distance(targetX, targetY) * 2;
-            rippleSize += blurRadiusValue * 2;
+        // See also, size changes of the target element should be observed starting in
+        // the next frame after the initial layout by calling `requestAnimationFrame`.
+        requestAnimationFrame(() => {
+            this._resizeObserver = new ResizeObserver(() => {
+                if (this._markNeedsLayout == false) {
+                    this._markNeedsLayout = true;
+                    return;
+                }
+                this.performLayout();
+            });
 
-        // About fixed an issue where in case the size changes in the middle
-        const rippleWidth = rippleSize / targetSize.width * 100;
-        const rippleHeight = rippleSize / targetSize.height * 100;
-
-        // Sets style properties for the ripple position and intrinsic size settings.
-        this.style.position = "absolute";
-        this.style.left = `${targetX}px`;
-        this.style.top = `${targetY}px`;
-        this.style.width = `${rippleWidth}%`;
-        this.style.height = `${rippleHeight}%`;
-        this.style.pointerEvents = "none";
-        this.style.translate = "-50% -50%";
-        this.style.borderRadius = "50%";
-        this.style.backgroundColor = "var(--ripple, rgba(0, 0, 0, 0.2))";
-        this.style.willChange = "transform";
-        this.style.filter = `blur(${blurRadiusValue}px)`;
+            this._resizeObserver.observe(target);
+        });
 
         // Sets style properties for fade-in animation to ready phase. (start)
         this.style.opacity = "0";

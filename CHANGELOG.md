@@ -48,3 +48,6 @@
 - Fixed an issue where the fade-in animation was skipped at the start of the ripple effect. This issue occurred because `requestAnimationFrame` was used to handle intermediate steps, causing the element not to reflow when it was unnecessary. As a result, the browser could not determine the transition animation's start and end properly.
 
 - Updated the ripple effect to apply the willChange property, enabling GPU acceleration.
+
+# 1.3.30
+- Fixed an issue where the ripple effect now recalculates the layout when the target element's size changes, preventing problems during dynamic size changes.

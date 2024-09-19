@@ -33,6 +33,16 @@ export declare class TouchRippleEffectElement extends HTMLElement {
     target: HTMLElement;
     private _status;
     private _statusListeners;
+    /**
+     * This value is used to exclude layout calculations when the observer is initially
+     * triggered as it starts observing an element that is target.
+    */
+    private _markNeedsLayout;
+    /**
+     * The observer is defined to be called when the size of the element where a ripple effect
+     * is applied changes, rather than a ripple effect itself.
+     */
+    private _resizeObserver;
     constructor(position: PointerPosition, callback: Function, isRejectable: boolean, 
     /**
      * Whether to postpone the invocation of the related event callback function until
@@ -45,6 +55,9 @@ export declare class TouchRippleEffectElement extends HTMLElement {
     notify(): void;
     fadeout(parent?: HTMLElement): void;
     cancel(parent?: HTMLElement): void;
+    /** Sets style properties for the ripple position and intrinsic size settings. */
+    performLayout(): void;
+    disconnectedCallback(): void;
     connectedCallback(): void;
     dispose(): void;
 }

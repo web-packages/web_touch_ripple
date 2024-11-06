@@ -103,8 +103,8 @@ export class TouchRippleEffectElement extends HTMLElement {
         const targetStyle = getComputedStyle(target);
         const targetRect = DOMRectUtil.intrinsicOf(target, targetStyle);
         const targetSize = {
-            width:  targetRect.width, // intrinsic size
-            height: targetRect.height // intrinsic size
+            width: targetRect.width,
+            height: targetRect.height
         };
         const targetShiftLeft = parseFloat(targetStyle.marginLeft);
         const targetShiftTop = parseFloat(targetStyle.marginTop);
@@ -115,14 +115,20 @@ export class TouchRippleEffectElement extends HTMLElement {
         const centerY = targetSize.height / 2;
 
         const getBlurRadius = function() {
-            var blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "6%";
+            const blurRadius = parent.getPropertyByName("--ripple-blur-radius") || "5%";
             if (blurRadius.endsWith("%")) {
+                const minBlurRadius = Number.parseFloat(parent.getPropertyByName("--ripple-min-blur-radius") || "0px");
+                const maxBlurRadius = Number.parseFloat(parent.getPropertyByName("--ripple-max-blur-radius") || "30px");
                 const percent = Number(blurRadius.replace("%", "")) / 100;
                 const pixcels = targetMax * percent;
-                return Number(pixcels);
+
+                if (pixcels > maxBlurRadius) return maxBlurRadius;
+                if (pixcels < minBlurRadius) return minBlurRadius;
+
+                return pixcels;
             }
 
-            return Number(blurRadius.replace("px", ""));
+            return Number.parseFloat(blurRadius);
         }
 
         const getRippleSize = function(blurRadius: number) {
@@ -181,7 +187,14 @@ export class TouchRippleEffectElement extends HTMLElement {
         // See also, size changes of the target element should be observed starting in
         // the next frame after the initial layout by calling `requestAnimationFrame`.
         requestAnimationFrame(() => {
-            this._resizeObserver = new ResizeObserver(() => {
+            this._resizeObserver = new ResizeObserver(entries => {
+                // Disposes the target element when it is display none or when layout is not active.
+                if (entries.length != 0
+                 && entries[0].contentRect.width == 0
+                 && entries[0].contentRect.height == 0) {
+                    this.dispose();
+                }
+
                 if (this._markNeedsLayout == false) {
                     this._markNeedsLayout = true;
                     return;

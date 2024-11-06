@@ -51,3 +51,11 @@
 
 # 1.3.30
 - Fixed an issue where the ripple effect now recalculates the layout when the target element's size changes, preventing problems during dynamic size changes.
+
+# 1.4.0
+- Fixed an issue where the element would not be disposed when it was either display: none or its layout calculations were disabled, preventing further animations from being executed.
+
+- Added `--ripple-min-blur-radius` and `--ripple-max-blur-radius` custom properties to control the minimum and maximum blur radius of the touch ripple effect in percentage-based environments.
+
+- - --ripple-min-blur-radius: The minimum blur effect radius in pixels for the touch ripple effect. Default is 0px.
+- - --ripple-max-blur-radius: The maximum blur effect radius in pixels for the touch ripple effect. Default is 30px.

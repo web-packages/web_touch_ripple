@@ -166,9 +166,9 @@ export class TouchRippleElement extends HTMLElement {
 
     connectedCallback() {
         requestAnimationFrame(() => {
-            let child = this.child;
-            if (child == null) {
-                throw "The <touch-ripple> element must be exsists the child element.";
+            const child = this.child;
+            if (child == null || this.children.length > 1) {
+                throw "The <touch-ripple> element must be have a child element.";
             }
 
             // A gestures competition related.

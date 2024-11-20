@@ -167,7 +167,7 @@ export class TouchRippleElement extends HTMLElement {
     connectedCallback() {
         requestAnimationFrame(() => {
             let child = this.child;
-            if (child == null || this.children.length > 1) {
+            if (child == null) {
                 throw "The <touch-ripple> element must be exsists the child element.";
             }
 
